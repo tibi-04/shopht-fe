@@ -93,9 +93,7 @@ const ProductDetails = () => {
   return (
     <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
       <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
-
         <div className="w-full lg:w-1/2 relative">
-
           <div className="relative bg-gray-100 rounded-xl overflow-hidden mb-4 border">
             {activeImage && (
               <div
@@ -111,7 +109,6 @@ const ProductDetails = () => {
               </div>
             )}
           </div>
-
 
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide px-1">
             {(loading ? new Array(4).fill(null) : data.productImage).map(
@@ -137,7 +134,6 @@ const ProductDetails = () => {
             )}
           </div>
 
-   
           {zoomImage && (
             <div className="hidden lg:block absolute top-0 right-0 transform translate-x-full ml-6 w-80 h-80 border border-gray-300 bg-white rounded-xl overflow-hidden shadow-2xl z-10">
               <div
@@ -152,7 +148,6 @@ const ProductDetails = () => {
             </div>
           )}
         </div>
-
 
         <div className="w-full lg:w-1/2 flex flex-col gap-4 sm:gap-5">
           {loading ? (
@@ -209,7 +204,6 @@ const ProductDetails = () => {
                 )}
               </div>
 
-           
               <div className="flex flex-col sm:flex-row gap-3 mt-4">
                 <button
                   onClick={(e) => handleBuyProduct(e, params.id)}
@@ -227,7 +221,6 @@ const ProductDetails = () => {
                 </button>
               </div>
 
-         
               <div className="bg-gray-50 p-4 rounded-xl mt-5">
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center gap-2">
@@ -261,7 +254,6 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-    
               <div className="mt-6">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
                   Mô tả sản phẩm
@@ -271,24 +263,23 @@ const ProductDetails = () => {
                 </p>
               </div>
 
-
               {data.more_details?.length > 0 && (
                 <div className="mt-6 w-full">
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
+                  <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 mb-3">
                     Thông số chi tiết
                   </h2>
                   <div className="overflow-x-auto border border-gray-200 rounded-lg">
-                    <table className="min-w-full text-sm sm:text-base">
+                    <table className="min-w-full text-xs sm:text-sm md:text-base">
                       <tbody>
                         {data.more_details.map((detail, i) => (
                           <tr
                             key={i}
                             className="border-b border-gray-200 even:bg-gray-50"
                           >
-                            <td className="px-4 py-3 font-medium text-gray-700 w-2/5">
+                            <td className="px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 font-medium text-gray-700 w-1/3 sm:w-2/5">
                               {detail.key}
                             </td>
-                            <td className="px-4 py-3 text-gray-600">
+                            <td className="px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-gray-600">
                               {detail.value}
                             </td>
                           </tr>
@@ -303,7 +294,6 @@ const ProductDetails = () => {
         </div>
       </div>
 
-
       {data.category && (
         <div className="mt-12">
           <CategoryWiseProductDisplay
@@ -314,7 +304,6 @@ const ProductDetails = () => {
         </div>
       )}
 
-  
       <style jsx>{`
         .scrollbar-hide {
           -ms-overflow-style: none;
