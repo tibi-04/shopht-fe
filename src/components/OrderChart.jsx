@@ -13,12 +13,14 @@ import {
 const OrderChart = ({ userId }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const backendDomin =
+    process.env.REACT_APP_API_URL || "http://localhost:8080/api";
 
   const fetchOrderStats = async () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:8080/api/don-hang-cua-nguoi-dung?userId=${userId}`,
+        `${backendDomin}/don-hang-cua-nguoi-dung?userId=${userId}`,
         {
           credentials: "include",
         }
@@ -51,7 +53,7 @@ const OrderChart = ({ userId }) => {
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={data}
-          margin={{ top: 20, right: 30, left: 50, bottom: 10 }} 
+          margin={{ top: 20, right: 30, left: 50, bottom: 10 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />

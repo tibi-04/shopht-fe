@@ -11,11 +11,13 @@ const MyAccount = () => {
   const [avatarFile, setAvatarFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const dispatch = useDispatch();
+  const backendDomin = process.env.REACT_APP_API_URL || "http://localhost:8080/api";
+
 
   const fetchUserDetails = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8080/api/user-details", {
+      const response = await fetch(`${backendDomin}/user-details`, {
         method: "GET",
         credentials: "include",
       });

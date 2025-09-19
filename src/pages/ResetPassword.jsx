@@ -15,6 +15,8 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const backendDomin =
+    process.env.REACT_APP_API_URL || "http://localhost:8080/api";
 
   useEffect(() => {
     if (location.state?.email) setEmail(location.state.email);
@@ -38,14 +40,11 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:8080/api/dat-lai-mat-khau",
-        {
-          email,
-          otp,
-          newPassword,
-        }
-      );
+      const res = await axios.post(`${backendDomin}/dat-lai-mat-khau`, {
+        email,
+        otp,
+        newPassword,
+      });
 
       if (res.data.success) {
         toast.success(res.data.message || "Đặt lại mật khẩu thành công!");

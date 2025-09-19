@@ -7,18 +7,19 @@ import "react-toastify/dist/ReactToastify.css";
 const VerifyOtp = () => {
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [loading, setLoading] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60); 
+  const [timeLeft, setTimeLeft] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email || "";
   const inputRefs = useRef([]);
+  const backendDomin =
+    process.env.REACT_APP_API_URL || "http://localhost:8080/api";
 
   useEffect(() => {
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus();
     }
-
 
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
@@ -42,12 +43,10 @@ const VerifyOtp = () => {
       newOtp[index] = value;
       setOtp(newOtp);
 
-
       if (index < 5 && value !== "") {
         inputRefs.current[index + 1].focus();
       }
     } else if (value === "") {
-
       const newOtp = [...otp];
       newOtp[index] = "";
       setOtp(newOtp);
@@ -60,7 +59,6 @@ const VerifyOtp = () => {
 
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace" && otp[index] === "" && index > 0) {
-  
       inputRefs.current[index - 1].focus();
     }
   };
@@ -77,7 +75,6 @@ const VerifyOtp = () => {
       }
       setOtp(newOtp);
 
-
       const focusIndex = Math.min(5, pastedData.length - 1);
       inputRefs.current[focusIndex].focus();
     }
@@ -86,7 +83,7 @@ const VerifyOtp = () => {
   const handleResendOtp = async () => {
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:8080/api/quen-mat-khau", {
+      const res = await axios.post(`${backendDomin}/quen-mat-khau`, {
         email,
       });
 
@@ -95,7 +92,6 @@ const VerifyOtp = () => {
         setTimeLeft(60);
         setCanResend(false);
 
-    
         const timer = setInterval(() => {
           setTimeLeft((prevTime) => {
             if (prevTime <= 1) {
@@ -128,7 +124,7 @@ const VerifyOtp = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:8080/api/xac-thuc-otp", {
+      const res = await axios.post(`${backendDomin}/xac-thuc-otp`, {
         email,
         otp: otpValue,
       });

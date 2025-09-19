@@ -8,6 +8,8 @@ function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [showRelatedProducts, setShowRelatedProducts] = useState(true);
   const messagesEndRef = useRef(null);
+  const backendDomin =
+    process.env.REACT_APP_API_URL || "http://localhost:8080/api";
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -19,10 +21,10 @@ function Chatbot() {
     const userMessage = { sender: "user", text: input.trim() };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-    setShowRelatedProducts(false); 
+    setShowRelatedProducts(false);
 
     try {
-      const response = await fetch("http://localhost:8080/api/chatbot", {
+      const response = await fetch(`${backendDomin}/chatbot`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: input.trim() }),
@@ -59,7 +61,6 @@ function Chatbot() {
 
   return (
     <div className="fixed bottom-5 right-5 z-50">
-
       {!isOpen && (
         <div
           className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-lg cursor-pointer"
@@ -87,13 +88,11 @@ function Chatbot() {
         </div>
       )}
 
-
       {isOpen && (
         <div
           className="w-72 xs:w-80 sm:w-96 bg-white rounded-lg shadow-xl flex flex-col border border-gray-200"
           style={{ height: "500px", maxHeight: "80vh" }}
         >
-
           <div
             className="px-3 xs:px-4 py-3 rounded-t-lg flex justify-between items-center text-white"
             style={{ backgroundColor: "#a12b58" }}
@@ -123,7 +122,6 @@ function Chatbot() {
             </button>
           </div>
 
- 
           <div className="flex-1 overflow-y-auto p-3 xs:p-4 bg-gray-50">
             {messages.length === 0 && (
               <div className="text-center py-4">
@@ -175,7 +173,6 @@ function Chatbot() {
               </div>
             ))}
 
-
             {suggestedProducts.length > 0 && (
               <div className="bg-white p-2 xs:p-3 rounded-lg border border-gray-200 mt-2 mb-3">
                 <p className="text-xs xs:text-sm font-semibold text-gray-700 mb-2">
@@ -211,7 +208,6 @@ function Chatbot() {
               </div>
             )}
 
-       
             {products.length > 0 &&
               showRelatedProducts &&
               messages.length === 0 && (
@@ -263,7 +259,6 @@ function Chatbot() {
 
             <div ref={messagesEndRef} />
           </div>
-
 
           <div className="p-2 xs:p-3 border-t border-gray-200 bg-white rounded-b-lg">
             <div className="flex">

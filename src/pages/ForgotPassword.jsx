@@ -8,24 +8,24 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const backendDomin =
+    process.env.REACT_APP_API_URL || "http://localhost:8080/api";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8080/api/quen-mat-khau", {
+      const res = await axios.post(`${backendDomin}/quen-mat-khau`, {
         email,
       });
 
       if (res.data.success) {
-
         toast.success("Mã OTP đã được gửi tới email của bạn.");
         setTimeout(() => {
           navigate("/xac-thuc-otp", { state: { email } });
         }, 2000);
       } else {
-  
         toast.error(res.data.message || "Không thể gửi, email không tồn tại!");
       }
     } catch (error) {
